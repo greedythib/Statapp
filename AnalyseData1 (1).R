@@ -14,13 +14,8 @@ names(dataset) <- c("Date", "IDRUSD", "Date1", "TJSUSD", "Date2",
 dataset <- dataset[,c(-3,-5,-7,-9,-11,-13,-15,-16,-17,-19,-20,-21,-23,-24,-25,-27,-29,-31,-33,-35,-37,-39,-40,-41,-43,-45)]
 dataset$Date <-as.numeric(as.character(dataset$Date))
 dataset$Date <- as.Date(dataset$Date, origin = "1899-12-30")
-#dataset$Date <- (dataset$Date -36896)/7 + 1
 dataset <- dataset[seq(1,942),]
 
-
-#for (i in seq(2,ncol(dataset))) {
-# dataset[,i] <-as.numeric(as.character(dataset[,i]))
-#}
 
 dataset$IDRUSD <-as.numeric(gsub(",",".",as.character(dataset$IDRUSD)))
 dataset$TJSUSD <-as.numeric(gsub(",",".",as.character(dataset$TJSUSD)))
@@ -67,7 +62,7 @@ avg_return_yrly <- function(){
   return(sum_return/(n-1))
 }
 
-# Volatilité
+# VolatilitÃ©
 
 volatility_wkly <- function(){
   
