@@ -17,6 +17,9 @@ pour le test du chi-2 : faire representation graphique comparee de la loi normal
 
 test de jarque-bera pour l’adequation (a regarder aussi)
 
+travailler sur le concept : regarder la var en incluant la moyenne ou pas. 
+pb : on ne connait pas le cout de portage. ici on est sur des devises frontieres, donc pas d’historique de taux d’intérêt donc on se base seulement sur les mouvements de change 
+
 ## 
 
 Note : moyenne des distributions est negative : en moyenne les devises se sont dépréciées 
@@ -29,6 +32,8 @@ papier prime de risque :
 le coupon va compenser les mouvements de change
 
 var sans moyenne ? : hyp que en moyenne, le taux de portage compense au moins la perte de change 
+
+##
 
 ### 2) Thibaud
 
@@ -51,7 +56,6 @@ indice DXY (indice de devise : dollar weighted par devises en circulation) (lien
 
 indice BBDXY à tenter également
 
-travailler sur le concept : regarder la var en incluant la moyenne ou pas. 
-pb : on ne connait pas le cout de portage. ici on est sur des devises frontieres, donc pas d’historique de taux d’intérêt donc on se base seulement sur les mouvements de change 
+
 
 #### envoyer notebook pour mercredi
