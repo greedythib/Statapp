@@ -8,7 +8,8 @@
 test du chi2 : test de normalité
 
 calcul de VaR  sous l’hypothèse de normalité : 
-- avec / sans moyenne
+- avec moyenne
+- sans moyenne
 
 calcul de Var historique
 
