@@ -3,7 +3,7 @@
 
 ### Prochaine réunion : vendredi 8 Février 
 
-1) ELie et Robin 
+### 1) ELie et Robin 
 
 test du chi2 : test de normalité
 
@@ -30,14 +30,14 @@ le coupon va compenser les mouvements de change
 
 var sans moyenne ? : hyp que en moyenne, le taux de portage compense au moins la perte de change 
 
-2) Thibaud
+### 2) Thibaud
 
 expected short fall : moyenne des pertes réalisées au dela de la var = densité de la distribution qui est au delà de 5% (si on considere une var a 5%) (voir lien sur le calcul de l’expected shortfall pour une loi normale) ou prendre l’ensemble des obs au dela de la var et faire la moyenne
 
 turoriel pour le calcul : http://blog.smaga.ch/expected-shortfall-closed-form-for-normal-distribution/
  
 
- 3) Alexandre
+### 3) Alexandre
  
  matrice de correlation et ACP. Regarder quelles sont les devises les plus correlees aux cp 
 
