@@ -1,6 +1,6 @@
 install.packages("readxl")
 library(readxl)
-dataset<-read_excel("C:/Users/robin/Documents/Ensae/Statapp/ENSAE-Data.xlsx")
+dataset<-read_excel("C:/Users/baeli/Documents/R/ENSAE-Data (1).xlsx")
 
 dataset <- dataset[c(-1,-2),]
 names(dataset) <- c("Date", "IDRUSD", "Date1", "TJSUSD", "Date2", 
@@ -122,7 +122,7 @@ for(k in currency){
   }
   m <-mean(v)
   sd <- sd(v)
-
+  
   # Comparaison fonction de répartition
   plot(ecdf(v), main = k)
   curve(pnorm(x, m, sd), col = "blue", add = TRUE)  
@@ -132,3 +132,46 @@ for(k in currency){
   curve(dnorm(x, m, sd), col="blue", add = TRUE)
 }
 
+#JARQUE BERA
+jb_test=function(curr){
+  vect_rend <- seq(1,n-1)
+  d <- data[[curr]]
+  for (i in seq(1,n-1)){
+    current = d[i + 1]
+    past = d[i]
+    vect_rend[i] <- log(current/past)
+  }
+  m <-mean(vect_rend)
+  N=length(vect_rend)
+  num_b1=0
+  num_b2=0
+  den_b1=0
+  for (k in seq(1,N)){
+    num_b1=num_b1+(vect_rend[i]-m)**3
+    num_b2=num_b2+(vect_rend[i]-m)**4
+    den_b1=den_b1+(vect_rend[i]-m)**2
+  }
+  num_b1=num_b1/N
+  num_b2=num_b2/N
+  den_b1=(den_b1/N)**(3/2)
+  den_b2=den_b1**(4/3)
+  b1=num_b1/den_b1
+  b2=num_b2/den_b2
+  jb=N*((b1**2)/6+((b2-3)**2)/24)
+  resultat=c(N,num_b1,den_b1,b1,b2,jb)
+  return(resultat)
+}
+
+#VaR historique
+var_hist=function(curr,conf){
+  vect_rend <- seq(1,n-1)
+  d <- data[[curr]]
+  for (i in seq(1,n-1)){
+    current = d[i + 1]
+    past = d[i]
+    vect_rend[i] <- log(current/past)
+  }
+  vect_rend=sort(vect_rend) #on trie les rendements journaliers par ordre croissant
+  indice=n-conf*(n-1) #la var est la valeur "juste au dessus" de la queue de distribution à conf%
+  return(vect_rend[indice])
+}
