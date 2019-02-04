@@ -130,7 +130,7 @@ for(k in currency){
   curve(pnorm(x, m, sd), col = "blue", add = TRUE)  
   
   # Comparaison de densités
-  plot(density(v), main = k, ylim = c(0,45))
+  plot(density(v), main = k, ylim=c(0,max(density(v)$y, (1/(2*pi*(sd(v))**2))**(1/2))))
   curve(dnorm(x, m, sd), col="blue", add = TRUE)
 }
 
