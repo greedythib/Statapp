@@ -110,7 +110,9 @@ kurtosis_yrly <- function(){
   return (sum/(n-1))
 }
 
-# KHI 2
+# Test d'adéquation à une loi Normale
+
+# Adéquation graphique
 
 for(k in currency){
   v <- seq(1,n -1)
