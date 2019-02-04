@@ -175,5 +175,5 @@ var_hist=function(curr,conf){
   }
   vect_rend=sort(vect_rend) #on trie les rendements journaliers par ordre croissant
   indice=floor(n-conf*(n-1)) #la var est la valeur "juste au dessus" de la queue de distribution à conf%
-  return(vect_rend[indice])
+  return(vect_rend[floor(indice)+1])
 }
