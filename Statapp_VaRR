@@ -123,11 +123,11 @@ for(k in currency){
   m <-mean(v)
   sd <- sd(v)
   
-  # Comparaison fonction de répartition
+  # Comparaison fonction de rÃ©partition
   plot(ecdf(v), main = k)
   curve(pnorm(x, m, sd), col = "blue", add = TRUE)  
   
-  # Comparaison de densités
+  # Comparaison de densitÃ©s
   plot(density(v), main = k, ylim = c(0,45))
   curve(dnorm(x, m, sd), col="blue", add = TRUE)
 }
@@ -172,6 +172,6 @@ var_hist=function(curr,conf){
     vect_rend[i] <- log(current/past)
   }
   vect_rend=sort(vect_rend) #on trie les rendements journaliers par ordre croissant
-  indice=n-conf*(n-1) #la var est la valeur "juste au dessus" de la queue de distribution à conf%
+  indice=n-conf*(n-1) #la var est la valeur "juste au dessus" de la queue de distribution Ã  conf%
   return(vect_rend[indice])
 }
