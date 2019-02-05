@@ -140,6 +140,9 @@ for(k in currency){
 
 # B) Test de Kolmogorov Smirnov.
 
+# Déterminer si un échantillon suit bien une loi donnée connue par sa fonction de répartition continue.
+# On test H0 : les log-rendements suivent une loi normale (de moyenne et variance empirique) contre l'alternative.
+
 for(k in currency){
   v <- seq(1,n -1)
   d <- data[[k]]
