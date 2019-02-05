@@ -110,7 +110,9 @@ kurtosis_yrly <- function(){
   return (sum/(n-1))
 }
 
-# KHI 2
+# Test d'adÃ©quation Ã  une loi Normale
+
+# AdÃ©quation graphique
 
 for(k in currency){
   v <- seq(1,n -1)
@@ -123,12 +125,12 @@ for(k in currency){
   m <-mean(v)
   sd <- sd(v)
   
-  # Comparaison fonction de répartition
+  # Comparaison fonction de rÃ©partition
   plot(ecdf(v), main = k)
   curve(pnorm(x, m, sd), col = "blue", add = TRUE)  
   
-  # Comparaison de densités
-  plot(density(v), main = k, ylim = c(0,45))
+  # Comparaison de densitÃ©s
+  plot(density(v), main = k, ylim=c(0,max(density(v)$y, (1/(2*pi*(sd(v))**2))**(1/2))))
   curve(dnorm(x, m, sd), col="blue", add = TRUE)
 }
 
@@ -164,13 +166,13 @@ jb_test=function(curr){
 
 ### VaR historique
 var_hist=function(currencies,weight,conf){
-  # currencies est un vecteur dans lequel on précise le nom des devises composant le portefeuille, ex : currencies=c("IDRUSD","TJSUSD")
-  # weight est un vecteur dans leqeuel on précise le poids de chaque devise, ex : weight=c(0.3,0.7)
-  # conf est le niveau de confiance souhaité, ex : à 95% conf=0.95
+  # currencies est un vecteur dans lequel on prÃ©cise le nom des devises composant le portefeuille, ex : currencies=c("IDRUSD","TJSUSD")
+  # weight est un vecteur dans leqeuel on prÃ©cise le poids de chaque devise, ex : weight=c(0.3,0.7)
+  # conf est le niveau de confiance souhaitÃ©, ex : Ã  95% conf=0.95
   
     liste_rend=list() #liste qui contiendra les vecteurs rendements individuels de chaque devise du portefeuille
-    nb=length(currencies) #nombre de devises différentes dans le portefeuille
-    vect_rend_portf=seq(1,n-1) #initialisation du vecteur des rendements pondérés de tout le portefeuille
+    nb=length(currencies) #nombre de devises diffÃ©rentes dans le portefeuille
+    vect_rend_portf=seq(1,n-1) #initialisation du vecteur des rendements pondÃ©rÃ©s de tout le portefeuille
     for (curr in currencies){
       vect_rend_curr=seq(1,n-1) #initialisation du vecteur des rendements de la devise curr
       d=data[[curr]] #d est la colonne correspondant aux valeurs de la devise curr au cours du teps
@@ -179,32 +181,32 @@ var_hist=function(currencies,weight,conf){
         past = d[i]
         vect_rend_curr[i]=log(current/past) #calcul du rendement
       }
-      liste_rend=c(liste_rend,list(vect_rend_curr)) #ajout du vecteur des rendements de la devise curr à la liste
+      liste_rend=c(liste_rend,list(vect_rend_curr)) #ajout du vecteur des rendements de la devise curr Ã  la liste
     }
     for (i in seq(1,n-1)){
-      s=0 #intitialisation de la somme des rendements pondérés de chaque devise pour la semaine i
+      s=0 #intitialisation de la somme des rendements pondÃ©rÃ©s de chaque devise pour la semaine i
       for (k in seq(1,nb)){
-        s=s+liste_rend[[k]][i]*weight[k] #pondération du rendement de la devise numéro k pour la semaine i
+        s=s+liste_rend[[k]][i]*weight[k] #pondÃ©ration du rendement de la devise numÃ©ro k pour la semaine i
       }
-      vect_rend_portf[i]=s #ajout du rendement pondéré sur tout le portefeuille pour la semaine i
+      vect_rend_portf[i]=s #ajout du rendement pondÃ©rÃ© sur tout le portefeuille pour la semaine i
     }
   vect_rend_portf=sort(vect_rend_portf) #on trie les rendements par ordre croissant
-  indice=(n-conf*(n-1)) #la var est la valeur "juste au dessus" de la queue de distribution à conf%
+  indice=(n-conf*(n-1)) #la var est la valeur "juste au dessus" de la queue de distribution Ã  conf%
   return(vect_rend_portf[floor(indice)+1])
 }
 
 
-### VaR paramétrique avec et sans moyenne
+### VaR paramÃ©trique avec et sans moyenne
 var_param=function(currencies,weight,conf,nb_weeks,moyenne){
-  # currencies est un vecteur dans lequel on précise le nom des devises composant le portefeuille, ex : currencies=c("IDRUSD","TJSUSD")
-  # weight est un vecteur dans leqeuel on précise le poids de chaque devise, ex : weight=c(0.3,0.7)
-  # conf est le niveau de confiance souhaité, ex : à 95% conf=0.95
+  # currencies est un vecteur dans lequel on prÃ©cise le nom des devises composant le portefeuille, ex : currencies=c("IDRUSD","TJSUSD")
+  # weight est un vecteur dans leqeuel on prÃ©cise le poids de chaque devise, ex : weight=c(0.3,0.7)
+  # conf est le niveau de confiance souhaitÃ©, ex : Ã  95% conf=0.95
   # nb_weeks est le nombre de semaines sur lequel on veut travailler
-  # moyenne est un booléen, true si l'on veut une var avec moyenne, false sinon
+  # moyenne est un boolÃ©en, true si l'on veut une var avec moyenne, false sinon
   
   liste_rend=list() #liste qui contiendra les vecteurs rendements individuels de chaque devise du portefeuille
-  nb=length(currencies) #nombre de devises différentes dans le portefeuille
-  vect_rend_portf=seq(1,n-1) #initialisation du vecteur des rendements pondérés de tout le portefeuille
+  nb=length(currencies) #nombre de devises diffÃ©rentes dans le portefeuille
+  vect_rend_portf=seq(1,n-1) #initialisation du vecteur des rendements pondÃ©rÃ©s de tout le portefeuille
   for (curr in currencies){
     vect_rend_curr=seq(1,n-1) #initialisation du vecteur des rendements de la devise curr
     d=data[[curr]] #d est la colonne correspondant aux valeurs de la devise curr au cours du temps
@@ -213,7 +215,7 @@ var_param=function(currencies,weight,conf,nb_weeks,moyenne){
       past = d[i]
       vect_rend_curr[i]=log(current/past) #calcul du rendement
     }
-    liste_rend=c(liste_rend,list(vect_rend_curr)) #ajout du vecteur des rendements de la devise curr à la liste
+    liste_rend=c(liste_rend,list(vect_rend_curr)) #ajout du vecteur des rendements de la devise curr Ã  la liste
   }
   
   #calcul de la moyenne des returns du portefeuille
