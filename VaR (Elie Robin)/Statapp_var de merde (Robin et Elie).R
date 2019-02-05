@@ -1,3 +1,5 @@
+# I) Nettoyage de la base de données.
+
 install.packages("readxl")
 library(readxl)
 dataset<-read_excel("C:/Users/baeli/Documents/R/ENSAE-Data (1).xlsx")
@@ -27,6 +29,8 @@ for (k in currency){
 
 n=nrow(dataset)
 data <- dataset[,-1] #dataset sans la colonne "date" pour les calculs
+
+# II) Calculs statistiques de base.
 
 # Rendements moyens (base hebdomadaire puis annuelle)
 
@@ -110,9 +114,9 @@ kurtosis_yrly <- function(){
   return (sum/(n-1))
 }
 
-# Test d'adéquation à une loi Normale
+# III) Test d'adéquation à une loi Normale.
 
-# Adéquation graphique
+# A) Adéquation graphique.
 
 for(k in currency){
   v <- seq(1,n -1)
@@ -134,7 +138,7 @@ for(k in currency){
   curve(dnorm(x, m, sd), col="blue", add = TRUE)
 }
 
-#JARQUE BERA
+# B) Construction manuelle du test de Jarque Bera.
 jb_test=function(curr){
   vect_rend <- seq(1,n-1)
   d <- data[[curr]]
@@ -163,6 +167,8 @@ jb_test=function(curr){
   resultat=c(N,num_b1,den_b1,b1,b2,jb)
   return(resultat)
 }
+
+# IV) Value at Risk
 
 ### VaR historique
 var_hist=function(currencies,weight,conf){
