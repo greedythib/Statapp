@@ -138,7 +138,27 @@ for(k in currency){
   curve(dnorm(x, m, sd), col="blue", add = TRUE)
 }
 
-# B) Construction manuelle du test de Jarque Bera.
+# B) Test de Kolmogorov Smirnov.
+
+for(k in currency){
+  v <- seq(1,n -1)
+  d <- data[[k]]
+  for (i in seq(1,n-1)){
+    v_cur = d[i + 1]
+    v_past = d[i]
+    v[i] <- log(v_cur/v_past)
+  }
+  m <-mean(v)
+  sd <- sd(v)
+  print(k)
+  print(ks.test(v, "pnorm", mean = m, sd = sd))
+  if(ks.test(v, "pnorm", mean = m, sd = sd)$p.value > 0.01){
+    print("On ne peut pas rejetter l'hypothèse nulle au seuil de 99%")
+    cat("Le logarithme des rendements de", k, "ont une distribution normale. \n")
+  }
+}
+
+# C) Construction manuelle du test de Jarque Bera.
 jb_test=function(curr){
   vect_rend <- seq(1,n-1)
   d <- data[[curr]]
