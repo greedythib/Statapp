@@ -52,7 +52,7 @@ avg_return_yrly <- function(){
 avg_return_wkly = avg_return_wkly()
 avg_return_yrly = avg_return_yrly()
 
-# Volatilit�
+# Volatilité
 
 volatility_wkly <- function(){
   sum = 0
@@ -109,8 +109,64 @@ kurtosis_yrly <- function(){
   return (sum/(n-1))
 }
 
-# Worst week
+# Obtention de la matrice de corrélation
 
+data_centered = scale(data) #Données centrées réduites
+var_matrix = (1/(n-1))*(t(data_centered)%*%data_centered) #Estimateur sans biais de la matrice de corrélation
 
+# ACP 
 
+library(Factoshiny)
+
+data.pca <- PCA(data, graph = FALSE)
+
+# Visualisation du pouvoir explicatif des composantes principales
+eig.val <- data.pca$eig
+barplot(eig.val[, 2], 
+        names.arg = 1:nrow(eig.val), 
+        main = "Variances expliquées par les CPs (%)",
+        xlab = "Composantes Principales",
+        ylab = "Variance Expliquée (%)",
+        col ="steelblue")
+lines(x = 1:nrow(eig.val), eig.val[, 2], 
+      type = "b", pch = 19, col = "red")
+# Les deux premières composantes principales expliquent environ 85 % de la variance
+
+# Cercle des corrélations
+plot(data.pca, choix = "var", autoLab = "yes") 
+
+# On peut distinguer tout un groupe de devises très corrélées à la première composante principale (et toute bien représentées
+# par elle étant données les longueurs des flèches : KZT (Kazakhstan Tenge), RUB (Russian Ruble), KGS (Kyrgyzstan Som) , 
+# ZAR (South African Rand), IDR (Indonesian Rupiah), INR (Indian Rupee), TND (Tunisian Dinar), MMDK (Myanmar Kyat), 
+# MNT (Mongolian Togrog), MXN (Mexican Peso), HNL (Honduras Lempira), TJS (Tadjikistan Somoni)
+
+# Un deuxième groupe semble être plus corrélé à la deuxième composantes principale (mais réserve sur les devises GEL et CNY (également assez
+# fortement corrélées à la deuxième CP, respectivement positivement et négativement) et JOD (mal représentée par la CP)) : 
+# CNY (China Renminbi), THB (Thai Baht), PEN (Peruvian Sol), XOF (Franc CFA (Attention, pas Spot mais Bceao)), 
+# JOD (Jordanian Dinar), GEL (Georgia Lari), COP (Colombian Peso)
+
+# Visualisation des composantes principales
+data.ind <- data.pca$ind
+data.ind$coord
+
+curr_CP1 <- data.ind$coord[,1]
+curr_CP2 <- data.ind$coord[,2]
+
+CP <- data.frame(dataset$Date, curr_CP1, curr_CP2)
+names(CP) <- c("date","CP1","CP2")
+
+plot(CP$date,CP$CP1,type="l", ylab="Composante Principale 1", xlab="Date") # Première composante principale
+plot(CP$date,CP$CP2,type="l", ylab="Composante Principale 2", xlab="Date") # Deuxième composante principale
+
+# Affichage de l'évolution de quelques devises
+
+plot(dataset$Date,dataset$TNDUSD,type="l", ylab="Tunisian Dinar", xlab="Date")
+plot(dataset$Date,dataset$PENUSD,type="l", ylab="Peruvian Sol", xlab="Date")
+# Observer la similarité respectivement à la première et la seconde composante principale
+
+# Corrélation des devises à chacune des deux premières composantes principales
+
+cor_CP <- data.var$cor[,c(1,2)]
+# Un tableau affichant pour chaque devise la composante à la laquelle elel est le plus corrélée et le coefficient de corrélation pourrait
+# être intéressant
 
