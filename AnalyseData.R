@@ -146,6 +146,10 @@ plot(data.pca, choix = "var", autoLab = "yes")
 # JOD (Jordanian Dinar), GEL (Georgia Lari), COP (Colombian Peso)
 
 # Visualisation des composantes principales
+
+data.var <- data.pca$var
+data.var$coord
+
 data.ind <- data.pca$ind
 data.ind$coord
 
