@@ -1,0 +1,86 @@
+---
+title: "Package PerformanceAnalysis"
+output:
+  html_document:
+    df_print: paged
+---
+
+
+# Traitement des données 
+
+```{r message=FALSE, warning=FALSE}
+library(readxl)
+library(lubridate)
+library(PerformanceAnalytics)
+dataset<-read_excel("C:/Users/Thibaud Bruyelle/Documents/ENSAE/2A/Symbiotics Group/ENSAEData.xlsx")
+
+dataset <- dataset[c(-1,-2),]
+names(dataset) <- c("Date", "IDRUSD", "Date1", "TJSUSD", "Date2", 
+                    "KGSUSD", "Date3", "TNDUSD", "Date4", "PENUSD", "Date5", 
+                    "KZTUSD", "Date6", "INDRUSD", "INDRUSD_2", "INDRUSD_3", "Date7", 
+                    "MMDKUSD", "MMDKUSD_2", "MMDKUSD_3", "Date8", "RUBUSD", "RUBUSD_2", 
+                    "RUBUSD_3", "Date9", "GELUSD", "Date10", "HNLUSD", 
+                    "Date11", "CNYUSD", "Date12", "MNTUSD", "Date13", 
+                    "THBUSD", "Date14", "ZARUSD", "Date15", "JODUSD", 
+                    "Date17", "TNDUSD_2", "Date18", "MXNUSD", "Date19", 
+                    "XOFUSD", "Date20", "COPUSD")
+dataset <- dataset[,c(-3,-5,-7,-9,-11,-13,-15,-16,-17,-19,-20,-21,-23,-24,-25,-27,-29,-31,-33,-35,-37,-39,-40,-41,-43,-45)]
+
+
+dataset$Date <-as.numeric(as.character(dataset$Date))
+
+
+dataset <- dataset[seq(1,942),]
+
+# noms des devises du dataset
+currency <- names(dataset[c(-1)])
+
+# on passe toutes les variables au format numeric
+for (k in currency){
+  dataset[[k]] <- as.numeric(dataset[[k]])
+}
+
+n=nrow(dataset)
+```
+
+On passe la base sous format ```.xts``` d'une série temporelle.
+
+```{r}
+data <- xts(dataset[,-1], order.by = as.Date(dataset$Date, origin = "1899-12-30"))
+
+data[1:5,1:5]
+```
+
+# Graphiques et interprétations 
+
+
+```{r}
+plot(data, type = "l")
+
+
+weekly_returns <-  Return.calculate(data)
+
+plot(weekly_returns[,c(1,2)], type="l", colorset= rich6equal)
+
+
+charts.PerformanceSummary(weekly_returns[,c(1,2)], colorset = rich6equal, ylim=c(-5,5))
+
+maxDrawdown(weekly_returns[,1])
+
+
+charts.RollingPerformance(weekly_returns[,c(1,2)], colorset=rich6equal)
+
+table.Stats(weekly_returns[,1])
+
+```
+
+# Travail 
+
+On devrait faire un petit paragraphe pour définir et interpréter chaque indicateur ou notion définit dans les tables plus hauts. 
+
+- Elie : cumulative return / weekly return / drawdown / max drowdown 
+- Rio : Rolling Performance / Annualized Return, Std and Sharpe Ratio
+- la fonction ```charts.PerformancesSummary``` qui a plein d'options sur la VAR qui peut nous intéresser
+
+Comme ca on insère ces paragraphes dans notre prochain rapport officiel pour l'école, et on aura des questions à pose Belpaire
+
