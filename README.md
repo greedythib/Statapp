@@ -1,4 +1,4 @@
-AC# Statapp
+### Statapp
 ## Code R du sujet de Statapp sur la modélisation factorielle du risque de devise 
 
 ### Prochaine réunion : lundi 4 Mars 
@@ -16,4 +16,7 @@ bien revoir la théorie de l'acp / choisir sur quoi l'acp est fait
 ### groupe 2 
 
 Intégrer les variables explicatives (ACPs, regressions et corrélations)
+
+Certains taux de change peuvent être utilisés comme variable explicative selon les résultats d'ACP du groupe 1
+
 
