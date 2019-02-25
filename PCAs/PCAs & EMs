@@ -1,0 +1,83 @@
+
+library(readxl)
+
+em1 <- read_excel("C:/Users/Chloé/Desktop/data Thibaud/ENSAE Data.xlsx")
+
+
+# la date est déjà a un format date 
+# toutes les devises sont au format numérique donc rien à faire
+
+names(em1)[1] <- "Date"
+
+em2 <- read_excel("C:/Users/Chloé/Desktop/data Thibaud/New EM Data ENSAE.xlsx")
+
+# idem tout est déjà au bon format 
+
+# il me semble que le package performance analytics ne fasse pas d'acp donc 
+# pas besoin de tout passer en série temporelles 
+
+# on utilise les packages courramment utilisés
+
+
+library("FactoMineR")
+library("factoextra")
+
+res.pca.em1 <- PCA(em1[-1], scale.unit = TRUE ,graph = FALSE)
+
+eig.val.em1 <- get_eigenvalue(res.pca.em1)
+
+# NB : Une valeur propre > 1 indique que la composante principale (PC) concernée 
+# représente plus de variance par rapport à une seule variable d’origine, uniquement 
+# lorsque les données sont standardisée
+
+fviz_eig(res.pca.em1, addlabels = TRUE, ylim = c(0, 50))
+
+# Cercle de corrélation
+
+var.em1 <- get_pca_var(res.pca.em1)
+
+# à noter que var.em1$coord donne les coordonnées des variables dans le plan 
+# formé par les composantes principales, ces coordonnées sont les correlations 
+# avec chacun des axes pricipaux (et en aucun cas des projections, ce qui n'aurait
+# pas de sens)
+
+# en voici une représentation 
+
+fviz_pca_var(res.pca.em1, col.var = "blue")
+
+# Qualité de représentation
+
+# on parle de la qualité de représentation des variables sur la carte ACP
+# mesure pas le cos2 
+
+library("corrplot")
+corrplot(var.em1$cos2, is.corr=FALSE)
+
+# Un cos2 élevé indique une bonne représentation de la variable sur les 
+# axes principaux en considération. Dans ce cas, la variable est positionnée 
+# à proximité de la circonférence du cercle de corrélation.
+
+# Un faible cos2 indique que la variable n’est pas parfaitement représentée par
+# les axes principaux. Dans ce cas, la variable est proche du centre du cercle.
+
+# Contributions des variables aux axes principaux
+
+#Les contributions des variables dans la définition d’un axe principal donné, 
+# sont exprimées en pourcentage.
+
+# Les variables corrélées avec PC1 (i.e., Dim.1) et PC2 (i.e., Dim.2) sont
+# les plus importantes pour expliquer la variabilité dans le jeu de données.
+# Les variables qui ne sont pas en corrélation avec un axe ou qui sont corrélées
+# avec les derniers axes sont des variables à faible apport et peuvent être 
+# supprimées pour simplifier l’analyse globale.
+
+corrplot(var.em1$contrib, is.corr=FALSE)   
+
+# Description des dimensions 
+
+res.desc <- dimdesc(res.pca.em1, axes = c(1,2), proba = 0.05)
+# Description de la dimension 1
+res.desc$Dim.1
+
+# Etude de l'évolution des devises dans la carte ACP 
+
