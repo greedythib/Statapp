@@ -13,7 +13,7 @@ L'idée est de voir pourquoi l'acp de Rio a planté et de comparer cette derniè
 bien revoir la théorie de l'acp / choisir sur quoi l'acp est fait
 
 ##
-### groupe 2 
+### groupe 2 (Robin et Elie)
 
 Intégrer les variables explicatives (ACPs, regressions et corrélations)
 
