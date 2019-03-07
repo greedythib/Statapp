@@ -12,15 +12,15 @@ res.pca.fxdata <- PCA(fxdata[-1], scale.unit = TRUE ,graph = FALSE)
 eig.val.fxdata <- get_eigenvalue(res.pca.fxdata)
 fviz_eig(res.pca.fxdata, addlabels = TRUE, ylim = c(0, 80))
 
-#Cercle des corrélations
-#Rappel : la projection de la flèche sur F1 correspond au coefficient de corrélation entre v et F1 
+#Cercle des corrÃ©lations
+#Rappel : la projection de la flÃ¨che sur F1 correspond au coefficient de corrÃ©lation entre v et F1 
 fviz_pca_var(res.pca.fxdata, col.var = "blue")
 
-#On distingue un groupe de devises très corrélées positivement à la première CP (Euro, Couronne suédoise, 
-#Dollar canadien, Dollars australien et néo-zélandais). La Livre Sterling, très corrélée à la 2e CP
-#suit une tendance différente. 
+#On distingue un groupe de devises trÃ¨s corrÃ©lÃ©es positivement Ã  la premiÃ¨re CP (Euro, Couronne suÃ©doise, 
+#Dollar canadien, Dollars australien et nÃ©o-zÃ©landais). La Livre Sterling, trÃ¨s corrÃ©lÃ©e Ã  la 2e CP
+#suit une tendance diffÃ©rente. 
 
-#On stocke les valeurs prises par la premère composante principale
+#On stocke les valeurs prises par la premÃ¨re composante principale
 pc1=get_pca_ind(res.pca.fxdata)$coord[,c(1)]
 
 plot(fxdata[["date"]],fxdata[["CAD"]],type='l',ylab="Dollar canadien",xlab="Date")
