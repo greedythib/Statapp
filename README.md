@@ -26,5 +26,6 @@ En résumé, les prochaines choses à faire sont :
 - Tester la stationnarité des devises en prix 
 - Gerer le problème de stationnarité 
 -	Application sur un portefeuille
+- Faire un VAR !
 - Commencer le rapport
 
