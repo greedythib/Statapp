@@ -19,9 +19,12 @@ o	Utiliser les composantes principales pour construire un portefeuille de couver
 -	On peut essayer de mettre en application nos résultats sur un portefeuille (réel donné par Belpaire ou qu’on compose nous-même ?)
 
 En résumé, les prochaines choses à faire sont :
--	Régression sur les sets de variable explicatives
--	Prendre rendez-vous avec Francq au sujet des questions théoriques sur les time series : 
--- ACP en prix / rendements ; comment gérer le problème de non-stationnarité des moyennes ? 
+
+
+-	Régression sur les sets de variable explicatives (quelles variables expliquent pca1 par exemple)
+- Justifier que les rendements sont une série stationnaire
+- Tester la stationnarité des devises en prix 
+- Gerer le problème de stationnarité 
 -	Application sur un portefeuille
 - Commencer le rapport
 
