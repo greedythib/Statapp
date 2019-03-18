@@ -23,7 +23,7 @@ En résumé, les prochaines choses à faire sont :
 
 -	Régression sur les sets de variable explicatives (quelles variables expliquent pca1 par exemple)
 - Justifier que les rendements sont une série stationnaire
-- Tester la stationnarité des devises en prix 
+- Tester la stationnarité des devises en prix (tests de Dickey-Fuller, Philips-Perrons, KPSS)
 - Gerer le problème de stationnarité 
 -	Application sur un portefeuille
 - Faire un VAR !
